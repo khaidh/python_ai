@@ -61,9 +61,9 @@ def print_results(results_dic, results_stats_dic, model,
 
     # Prints summary statistics over the run
     print("\n\n*** Results Summary for CNN Model Architecture", model.upper(), "***")
-    for key in results_stats_dic:
-        if key.startswith('n'):
-            print("{:20}: {:3f}".format(key, results_stats_dic[key]))
+    print("{:20}: {:3d}".format('N Images', results_stats_dic['n_images']))
+    print("{:20}: {:3d}".format('N Dog Images', results_stats_dic['n_dogs_img']))
+    print("{:20}: {:3d}".format('N Not-Dog Images', results_stats_dic['n_notdogs_img']))
 
     print("\n\n*** Summary statistics (percentages) on Model Run", model.upper(), "***")
     for key in results_stats_dic:
@@ -77,13 +77,11 @@ def print_results(results_dic, results_stats_dic, model,
              != results_stats_dic['n_images'])
     ):
         print("\nINCORRECT Dog/NOT Dog Assignments:")
-        for key in results_dic:
-            value = results_dic[key]
-            if value[2] == 1 and value[3] == 0:
-                print("\t{:>26}: Pet image label is A-DOG     - Classified as NOT-A-DOG".format(key))
-
-            if value[2] == 0 and value[4] == 1:
-                print("\t{:>26}: Pet image label is NOT-A-DOG - Classified as A-DOG".format(key))
+        for value in results_dic.values():
+            if value[3] == 1 and value[4] == 0:
+                print("Real: {:>26}   Classifier: {:>30}".format(value[0], value[1]))
+            if value[3] == 0 and value[4] == 1:
+                print("Real: {:>26}   Classifier: {:>30}".format(value[0], value[1]))
 
     # IF print_incorrect_breed == True AND there were dogs whose breeds
     # were incorrectly classified - print out these cases
@@ -95,7 +93,6 @@ def print_results(results_dic, results_stats_dic, model,
 
         # process through results dict, printing incorrectly classified breeds
         # results_dic item: key => [[0]image_label, [1]model_label, [2]match, [3]image_label_dog, [4]model_label_dog]
-        for key in results_dic:
-            value = results_dic[key]
+        for value in results_dic.values():
             if value[3] == 1 and value[4] == 1 and value[2] == 0:
                 print("Real: {:>26}   Classifier: {:>30}".format(value[0], value[1]))

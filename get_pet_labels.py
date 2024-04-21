@@ -39,8 +39,7 @@ def get_pet_labels(image_dir):
     """
     in_files = listdir(image_dir)
     results_dic = dict()
-    for idx in range(0, len(in_files), 1):
-        filename = in_files[idx]
+    for filename in in_files:
 
         if filename[0] == ".":
             continue

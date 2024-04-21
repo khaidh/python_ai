@@ -64,28 +64,21 @@ def adjust_results4_isadog(results_dic, dogfile):
     dognames_dic = dict()
     with open(dogfile, "r") as infile:
         line = infile.readline().strip('\n')
-
         while line != "":
-            line_split_by_comma = line.split(',')
-            dognames = [x.strip(' ').lower() for x in line_split_by_comma]
-            for x in dognames:
-                if x in dognames_dic:
-                    continue
-                dognames_dic[x] = 1
-
+            dognames_dic[line] = 1
             line = infile.readline().strip('\n')
 
-    for key in results_dic:
-        img_label = results_dic[key][0]
-        model_label = results_dic[key][1]
+    for value in results_dic.values():
+        img_label = value[0]
+        model_label = value[1]
         if img_label in dognames_dic:
             if model_label in dognames_dic:
-                results_dic[key].extend([1, 1])
+                value.extend([1, 1])
             else:
-                results_dic[key].extend([1, 0])
+                value.extend([1, 0])
 
         else:
             if model_label in dognames_dic:
-                results_dic[key].extend([0, 1])
+                value.extend([0, 1])
             else:
-                results_dic[key].extend([0, 0])
+                value.extend([0, 0])

@@ -50,6 +50,7 @@ def get_input_args():
         '--arch',
         type=str,
         default='vgg',
+        choices=['vgg', 'alexnet', 'resnet'],
         help='The CNN Model Architecture'
     )
 

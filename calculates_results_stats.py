@@ -76,8 +76,7 @@ def calculates_results_stats(results_dic):
 
     # process through the results dictionary
     # results_dic item: key => [[0]image_label, [1]model_label, [2]match, [3]image_label_dog, [4]model_label_dog]
-    for key in results_dic:
-        value = results_dic[key]
+    for value in results_dic.values():
         if value[2] == 1:
             n_match += 1
 
